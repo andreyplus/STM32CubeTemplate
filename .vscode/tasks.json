@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Init Debug",
+            "type": "shell",
+            "command": "cmake --preset=Debug",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Init Release",
+            "type": "shell",
+            "command": "cmake --preset=Release",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Build Debug",
+            "type": "shell",
+            "command": "cmake --build --preset=Debug",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Build Release",
+            "type": "shell",
+            "command": "cmake --build --preset=Release",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "rm -rf build",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Flash Debug",
+            "type": "shell",
+            "command": "probe-rs run --chip ${config:mcu} ./build/Debug/${workspaceFolderBasename}.elf",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "Build Debug"
+            ],
+        },
+        {
+            "label": "Flash Release",
+            "type": "shell",
+            "command": "probe-rs run --chip ${config:mcu} ./build/Release/${workspaceFolderBasename}.elf",
+            "problemMatcher": [],
+            "dependsOn": [
+                "Build Release"
+            ],
+        }
+    ]
+}

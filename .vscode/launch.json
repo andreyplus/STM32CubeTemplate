@@ -1,0 +1,33 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "openocd",
+            "executable": "./build/Debug/${workspaceFolderBasename}.elf",
+            "configFiles": [
+                "interface/stlink-v2.cfg",
+                "target/stm32h7x.cfg"
+            ],
+            "postLaunchCommands": [
+                "monitor $_TARGETNAME configure -event gdb-detach { resume }"
+                /*
+                TODO: check
+                if { [info exists _TARGETNAME] } {
+                    monitor $_TARGETNAME configure -event gdb-detach { resume }
+                } else {
+                    monitor $_CHIPNAME.cpu0 configure -event gdb-detach { resume } // for H7
+                }
+                */
+            ],
+            "svdFile": "{config:mcu}.svd",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            "preLaunchTask": "Build Debug"
+        }
+    ]
+}
